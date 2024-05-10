@@ -23,3 +23,15 @@
         width: 100%;
     }
 }
+
+@media screen and (max-width: 1280px) {
+    .page {
+        padding: 45px 15% 36px;  
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .page {
+        padding: 45px 13% 36px;
+    }
+}

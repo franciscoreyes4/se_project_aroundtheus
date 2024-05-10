@@ -32,26 +32,32 @@
     background-color: #fff;
     color: #000;
     font-family: "Inter", "Arial", sans-serif;
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+h2 {
+    max-width: 282px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     font-size: 24px;
     font-style: normal;
     font-weight: 900;
     line-height: normal;
     padding: 25px 20px;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    max-width: 282px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
 }
+
 
 .card__like-button {
     background: transparent url(/images/like_inactive.svg) center no-repeat;
     width: 21px;
     height: 18px;
     border: none;
+    padding-right: 25px;
 }
 
 .card__like-button:active {

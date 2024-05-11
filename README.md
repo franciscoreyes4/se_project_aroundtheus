@@ -1,21 +1,30 @@
-# Project 3: Around The U.S.
+Around The U.S.
 
 ### Overview  
 
-* Intro  
+* Description
 * Figma  
-* Images  
+* Future plans for improvement 
   
-**Intro**
-  
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.  
+An interactive page where users are able to add and remove photos, like photos of other users, and make a few minor adjustments to their own profile.
+
+
   
 **Figma**  
   
 * [Link to the project on Figma](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)  
   
-**Images**  
+**Future plans**  
+Adding functionality to the buttons on the page that would allow adding and removing pictures. Also allowing users to edit their profile.
+
   
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
+ 
   
 Good luck and have fun!
+
+Link to github project:
+https://github.com/franciscoreyes4/se_project_aroundtheus
+
+Link to video:
+https://drive.google.com/file/d/1ivDPGv8uPWP8Pe-9jBNOZUY_kCQlysDW/view?usp=sharing
+

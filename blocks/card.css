@@ -61,6 +61,6 @@ h2 {
 }
 
 .card__like-button:active {
-    background: transparent url(/images/like_active.svg) center no-repeat;
+    background: transparent url(../images/like_active.svg) center no-repeat;
     width: 21px;
 }

@@ -20,7 +20,7 @@ Adding functionality to the buttons on the page that would allow adding and remo
   
  
   
-Good luck and have fun!
+
 
 Link to github project:
 https://github.com/franciscoreyes4/se_project_aroundtheus

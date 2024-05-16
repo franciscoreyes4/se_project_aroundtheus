@@ -23,7 +23,7 @@ Adding functionality to the buttons on the page that would allow adding and remo
 
 
 Link to github project:
-https://github.com/franciscoreyes4/se_project_aroundtheus
+https://franciscoreyes4.github.io/se_project_aroundtheus/
 
 Link to video:
 https://drive.google.com/file/d/1ivDPGv8uPWP8Pe-9jBNOZUY_kCQlysDW/view?usp=sharing

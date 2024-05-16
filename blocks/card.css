@@ -9,9 +9,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    max-width: 282px;
 }
 
-.card__list {
+.cards__list {
     display: grid;
     grid-template-columns: repeat(auto-fit, 282px);
     list-style: none;
@@ -22,9 +23,8 @@
 
 .card__image {
     width: 282px;
-    height: 282px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    height:282px;
+    object-fit: cover;
 }
 
 .card__description {
@@ -35,11 +35,9 @@
     align-items: center;
     position: relative;
     justify-content: space-between;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
 }
 
-h2 {
+.card__title {
     max-width: 282px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -58,9 +56,10 @@ h2 {
     height: 18px;
     border: none;
     padding-right: 25px;
+    cursor: pointer;
 }
 
-.card__like-button:active {
+.card__like-button:hover {
     background: transparent url(../images/like_active.svg) center no-repeat;
     width: 21px;
 }

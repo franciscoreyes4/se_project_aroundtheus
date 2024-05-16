@@ -35,3 +35,27 @@
         padding: 45px 13% 36px;
     }
 }
+
+@media  screen and (max-width: 320px) {
+    .page {
+        padding: 0;
+    }
+
+    .header {
+        width: 320px;
+        justify-content: left;
+        padding-bottom: 0;
+    }
+
+    .body{
+        margin:0;
+    }
+    .header__logo {
+        height: 24px;
+        width: 126px;
+        padding-left: 19px;
+    }
+     .content {
+        padding: 0 19px;
+     }
+}

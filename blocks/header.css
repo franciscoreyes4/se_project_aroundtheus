@@ -1,5 +1,8 @@
 .header {
     display: block;
+    width: 100%;
     padding-top: 45px;
     padding-bottom: 45px;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+    box-sizing: border-box;
 }

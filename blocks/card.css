@@ -1,5 +1,5 @@
 .cards {
-    margin-top: 30px;
+    margin-top: 68px;
 }
 
 .card {
@@ -35,6 +35,8 @@
     align-items: center;
     position: relative;
     justify-content: space-between;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .card__title {
@@ -55,11 +57,17 @@
     width: 21px;
     height: 18px;
     border: none;
-    padding-right: 25px;
+    margin-right: 20px;
     cursor: pointer;
 }
 
 .card__like-button:hover {
-    background: transparent url(../images/like_active.svg) center no-repeat;
-    width: 21px;
+    opacity: 0.5;
+}
+
+@media screen and (max-width: 320px) {
+    .cards {
+        margin-top: 36px;
+    }
+
 }

@@ -1,21 +1,34 @@
 .page {
-    background-color: black;
-    color: white;
-    font-family: "Inter", sans-serif;
-  }
-  
-  .page__section {
-    max-width: 880px;
-    position: relative;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 auto;
-  }
+  font-family: "Inter", Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+}
 
-  @media screen and (max-width: 560px) {
-    .page__content {
-      width: 580px;
-      margin: 0 20px;
-    }
+.page__section {
+  max-width: 880px;
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+}
+
+.page__content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+@media screen and (max-width: 899px) {
+  .page__content {
+    margin: 0 20px;
+    max-width: calc(100% - 40px);
   }
+}
+
+@media screen and (max-width: 320px) {
+  .page__content {
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+  }
+}
   

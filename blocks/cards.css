@@ -12,3 +12,13 @@
     max-width: 880px;
 }
 
+@media screen and (max-width: 480px) {
+    .cards {
+        padding: 0 19px;
+    }
+    .cards__list {
+      padding: 0;
+      position: relative;
+      margin-top: 36px;
+    }
+  }

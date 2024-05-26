@@ -9,6 +9,9 @@
     margin: 67px auto 60px;
     width: calc(282px * 3 + 17px * 2);
     margin: 67px auto 60px;
+    margin: 0 auto;
+    padding: 0 20px;
+      
 }
 
 @media screen and (max-width: 919px) {

@@ -1,8 +1,9 @@
 .header {
-    display: block;
     max-width: 880px;
     border-bottom: 1px solid rgba(84, 84, 84, 0.7);
-}
+    padding: 45px 0 0;
+    margin: 0 auto;
+  }
 
 .header__logo {
     margin: 45px 0 41px 28px; 
@@ -10,12 +11,13 @@
 
 @media  screen and (max-width: 320px) {
     .header {
-        width: 320px;
-        padding-bottom: 0;
-        margin: 28px 0 0;
-    }
+        max-width: 320px;
+        margin: 0;
+        padding: 0;
+      }
     .header__logo {
+        margin: 45px auto 32px 19px;
         height: 24px;
         width: 126px;
-    }
+      }
 }

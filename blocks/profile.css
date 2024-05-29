@@ -1,4 +1,5 @@
 .profile {
+
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -80,6 +81,7 @@
     overflow: hidden;
 }
 
+    
 @media screen and (max-width: 770px) {
     .profile {
       flex-direction: column;
@@ -147,6 +149,10 @@
     }
 
     .profile__image {
-        margin-bottom: 26px;
+        margin-bottom: 20px;
+    }
+
+    .profile__title {
+        height: 22px;
     }
 }

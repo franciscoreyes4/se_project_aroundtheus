@@ -14,11 +14,18 @@
 
 @media screen and (max-width: 480px) {
     .cards {
-        padding: 0 19px;
+        padding: 0;
     }
     .cards__list {
       padding: 0;
       position: relative;
       margin-top: 36px;
+      max-width: 480px;
+    }
+  }
+
+  @media screen and (max-width: 320px) {
+    .cards {
+        padding: 0 19px;
     }
   }

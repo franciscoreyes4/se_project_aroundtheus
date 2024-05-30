@@ -13,6 +13,14 @@
       }
     }
 
+@media screen and (max-width: 880px) {
+    .content {
+        max-width: 100vh;
+        margin: 0 auto;
+    }
+    
+}
+
 
 @media screen and (max-width: 320px) {
     .content {

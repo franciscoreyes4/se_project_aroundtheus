@@ -25,6 +25,12 @@
   }
 }
 
+@media screen and (max-width: 580px) {
+  .page__content {
+    margin: 0 auto;
+  }
+}
+
 @media screen and (max-width: 320px) {
   .page__content {
     padding: 0;

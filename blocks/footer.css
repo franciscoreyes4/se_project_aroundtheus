@@ -7,15 +7,10 @@
     font-weight: 400;
     line-height: normal;
     height: 18px;
-    margin: 0 auto;
+    margin: 67px auto 60px;
     max-width: calc(282px * 3 + 17px * 2);
 }
-@media screen and (max-width: 1280px) {
-    .footer__copyright {
-    margin-top: 67px;
-    padding-bottom: 60px;
-    }
-}
+
 @media screen and (max-width: 919px) {
     .footer{
     margin-left: auto;
@@ -24,12 +19,9 @@
     }
 }
 @media screen and (max-width: 320px) {
-    .footer {
-        font-size: 14px;
-    }
     .footer__copyright {
-        margin: 48px 19px 0;
-        padding-bottom: 36px;
+        margin: 48px 19px 36px;
+        font-size: 14px;
 }
     
 }

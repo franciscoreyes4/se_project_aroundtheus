@@ -6,6 +6,7 @@
 }
 
 .page__section {
+  box-sizing: border-box;
   max-width: 880px;
   width: 100%;
   position: relative;
@@ -26,7 +27,7 @@
 }
 
 @media screen and (max-width: 580px) {
-  .page__content {
+  .page__section {
     margin: 0 auto;
   }
 }
@@ -35,7 +36,7 @@
   .page__content {
     padding: 0;
     margin: 0;
-    max-width: 100%;
+    width: 100vh;
   }
 }
   

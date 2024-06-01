@@ -106,7 +106,6 @@
 @media screen and (max-width: 620px) {
     .profile {
         flex-direction: column;
-        margin: 0 auto;
     }
     .profile__title {
         font-size: 22px;

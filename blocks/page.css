@@ -19,6 +19,7 @@
   min-height: 100vh;
 }
 
+
 @media screen and (max-width: 899px) {
   .page__content {
     margin: 0 20px;

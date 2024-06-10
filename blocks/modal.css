@@ -42,6 +42,11 @@
     cursor: pointer;
 }
 
+.modal__close:hover {
+    opacity: 0.6;
+  }
+
+
 .modal__heading {
     color: #000;
     font-size: 24px;

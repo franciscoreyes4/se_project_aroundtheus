@@ -88,11 +88,27 @@
     .modal_opened {
         align-items: flex-start;
     }
+
     .modal__container {
         min-width: 282px;
         min-height: 322px;
+        padding: 25px 22px;
     }
 
+    .modal__close {
+        padding: 0;
+        height: 26px;
+        width: 26px;
+        bottom: calc(100% + 14px);
+        left: 90%;
+    }
 
-    
+    .modal__button {
+       margin-top: 45px;
+    }
+
+    .modal__heading {
+        font-size: 18px; 
+        margin-bottom: 75px;
+    }
 }

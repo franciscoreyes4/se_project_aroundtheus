@@ -42,6 +42,7 @@ const addNewCardButon = document.querySelector(".profile__add-button");
 const nameInput = profileEditModal.querySelector(".modal__input_type_name");
 const jobInput = profileEditModal.querySelector(".modal__input_type_description");
 
+
 // Functions
 function closeModal(modal) {
     modal.classList.remove("modal_opened");
@@ -55,6 +56,21 @@ function getCardElement(cardData) {
     const cardElement = cardTemplate.cloneNode(true);
     const cardImagEl = cardElement.querySelector(".card__image");
     const cardTitleEl = cardElement.querySelector(".card__title");
+    const likeButton = cardElement.querySelector(".card__like-button");
+    const deleteButton = cardElement.querySelector(".card__delete-button");
+
+    // find delete buton
+    // /add event listen to delete button
+    // cardElement.remove();
+
+    likeButton.addEventListener("click", () => {
+    likeButton.classList.toggle("card__like-button_active");
+    });
+
+    deleteButton.addEventListener("click", () => {
+        cardElement.remove();
+    });
+
     cardImagEl.src = cardData.link;
     cardImagEl.alt = cardData.name;
     cardTitleEl.textContent = cardData.name;

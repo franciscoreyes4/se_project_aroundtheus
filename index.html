@@ -42,13 +42,27 @@
         </footer>
     </div>
 
+    <!-- Edit modal -->
     <div class="modal" id="profile-edit-modal">
         <div class="modal__container">
             <button class="modal__close" id="modal-close-button" ></button>
-            <p class="modal__heading">Edit Profile</p>
+            <h3 class="modal__heading">Edit Profile</h3>
             <form class="modal__form">
-                <input type="text" class="modal__input" id="modal__input_title" name="title" placeholder="Name">
+                <input type="text" class="modal__input" id="modal__input_name" name="name" placeholder="Name">
                 <input type="text" class="modal__input" id="modal__input_description" name="description" placeholder="Description">
+                <button class="modal__button">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add card modal -->
+    <div class="modal" id="add-card-modal">
+        <div class="modal__container">
+            <button class="modal__close" id="modal-close-button" ></button>
+            <h3 class="modal__heading">New Place</h3>
+            <form class="modal__form" id="add-card-form">
+                <input type="text" class="modal__input" id="modal__input_title" name="title" placeholder="Title">
+                <input type="text" class="modal__input" id="modal__input_url" name="url" placeholder="Image URL">
                 <button class="modal__button">Save</button>
             </form>
         </div>

@@ -69,6 +69,14 @@
     padding: 0;
 }
 
+#modal__input_name {
+    margin-bottom: 30px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
 #modal__input_title {
     margin-bottom: 30px;
     height: 28px;
@@ -78,6 +86,12 @@
 }
 
 #modal__input_description {
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+#modal__input_url {
     height: 28px;
     padding: 0;
     border: none;

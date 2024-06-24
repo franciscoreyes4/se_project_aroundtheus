@@ -11,12 +11,15 @@
     visibility: hidden;  
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    transition:visibility 0s linear 0.6s,opacity 0.6s linear;
 }
 
 .modal_opened {
     display: flex;
-    visibility: visible;    
-    transition: opacity 0.5s linear, visibility 0.5s linear; 
+    visibility:visible;
+    opacity:1;
+    transition-delay:0s;
 }
 
 .modal__container {
@@ -132,10 +135,20 @@
 
     .modal__button {
        margin-top: 45px;
+       font-size: 14px;
     }
 
     .modal__heading {
         font-size: 18px; 
         margin-bottom: 75px;
+    }
+
+    .modal__preview_container {
+        margin: 0;
+
+    }
+
+    .modal__image {
+        width: 100%;
     }
 }

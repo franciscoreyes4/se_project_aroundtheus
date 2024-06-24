@@ -63,11 +63,11 @@
             <form class="modal__form" id="add-card-form">
                 <input type="text" class="modal__input" id="modal__input_title" name="title" placeholder="Title">
                 <input type="text" class="modal__input" id="modal__input_url" name="url" placeholder="Image URL">
-                <button class="modal__button">Save</button>
+                <button class="modal__button">Create</button>
             </form>
         </div>
     </div>
-
+        <!-- Card template -->
         <template id="card-template">
             <li class="card">
                 <img class="card__image" src="" alt=""/>
@@ -80,6 +80,14 @@
         </template>
         
         <!-- add previewImageMdal -->
+        <div class="modal" id="modal-preview-picture">
+            <div class="modal__preview_container">
+              <button class="modal__close" id="picture-close-button"></button>
+              <img class="modal__image" src="" alt=""/>
+              <p class="modal__picture_caption"></p>
+            </div>
+          </div>
+
 <script src="./scripts/index.js"></script>
 </body>
 </html>

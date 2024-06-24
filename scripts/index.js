@@ -1,3 +1,4 @@
+// Card Data
 const initialCards = [
     {
         name: "Yosemite Valley",
@@ -44,9 +45,11 @@ const nameInput = profileEditModal.querySelector(".modal__input_type_name");
 const jobInput = profileEditModal.querySelector(".modal__input_type_description");
 const cardTitleInput = addCardFormElement.querySelector("#modal__input_title");
 const cardUrlInput = addCardFormElement.querySelector("#modal__input_url");
-
-
-// find previewImageMdal
+const cardImageElement = document.querySelector(".card-image");
+const previewImageModal = document.querySelector("#modal-preview-picture");
+const previewImage = previewImageModal.querySelector(".modal__image");
+const previewImageCaption = previewImageModal.querySelector(".modal__picture_caption");
+const cardPreviewCloseButton = document.querySelector("#picture-close-button");
 
 // Functions
 function closeModal(modal) {
@@ -68,8 +71,13 @@ function getCardElement(cardData) {
     const cardTitleEl = cardElement.querySelector(".card__title");
     const likeButton = cardElement.querySelector(".card__like-button");
     const deleteButton = cardElement.querySelector(".card__delete-button");
-// add click listen to cardImage element
-// openModal with previewImageMdal
+    cardImagEl.addEventListener("click", () => {
+    previewImageModal.classList.add("modal_opened");
+    previewImage.src = cardData.link;
+    previewImage.alt = cardData.name;
+    previewImageCaption.textContent = cardData.name;
+  });
+
 
     likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_active");
@@ -101,6 +109,7 @@ function handleAddCardFormSubmit(e) {
     closeModal(addCardModal);
 }
 
+// Event listeners
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
@@ -112,5 +121,7 @@ profileEditButton.addEventListener("click",() => {
 profileModalCloseButton.addEventListener("click", () => closeModal(profileEditModal));
 addNewCardButon.addEventListener("click", () => openModal(addCardModal));
 addModalCloseButton.addEventListener("click", () => closeModal(addCardModal));
+cardPreviewCloseButton.addEventListener("click", () => closeModal(previewImageModal));
+
 
 initialCards.forEach((cardData) => renderCard(cardData, cardList));

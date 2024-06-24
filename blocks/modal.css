@@ -1,5 +1,6 @@
 .modal {
     position: fixed;
+    display: flex;
     background-color: rgba(0, 0, 0, .5) ;
     top: 0;
     left: 0;
@@ -7,15 +8,15 @@
     right: 0;
     z-index: 99;
     padding: 123px 19px;
-    display: none;    
-
+    visibility: hidden;  
+    align-items: center;
+    justify-content: center;
 }
 
 .modal_opened {
     display: flex;
-    justify-content: center;
-    align-items: center;    
-  
+    visibility: visible;    
+    transition: opacity 0.5s linear, visibility 0.5s linear; 
 }
 
 .modal__container {
@@ -97,6 +98,18 @@
     border: none;
     border-bottom: 1px solid #ccc;
 }
+
+.modal__preview_container {
+    color: #fff;
+    position: relative;
+    margin: auto;
+}
+
+.modal__image {
+    max-width: 75vh;
+    max-height: 75vh;
+}
+
 
 @media screen and (max-width: 620px) {
     .modal_opened {

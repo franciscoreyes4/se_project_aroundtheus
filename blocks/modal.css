@@ -74,8 +74,15 @@
     padding: 0;
 }
 
+.modal__input {
+    height: 29px;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
 #modal__input_name {
-    margin-bottom: 30px;
     height: 28px;
     padding: 0;
     border: none;
@@ -117,12 +124,15 @@
 .modal__input_type_error {
     border-bottom: 2px solid red !important;
     margin-bottom: 0 !important;
+    height: 29px; 
   }
   
   .modal__input_type_error_visible {
     color: red !important; 
     font-size: 12px !important;
     display: block !important; 
+    height: 29px;
+    line-height: 29px;
   }
   
   .modal__button_disabled {

@@ -65,6 +65,21 @@ function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
 
+function closeOnOverlayClick(e) {
+  if (e.target.classList.contains("modal_opened")) {
+    closeModal(e.target);
+  }
+}
+
+function closeOnEscKey(event) {
+  if (event.key === "Escape") {
+    const openedModal = document.querySelector(".modal_opened");
+    if (openedModal) {
+      closeModal(openedModal);
+    }
+  }
+}
+
 function openModal(modal) {
   modal.classList.add("modal_opened");
 }
@@ -137,5 +152,13 @@ addModalCloseButton.addEventListener("click", () => closeModal(addCardModal));
 cardPreviewCloseButton.addEventListener("click", () =>
   closeModal(previewImageModal)
 );
+
+[profileEditModal, addCardModal, previewImageModal].forEach((modal) => {
+  modal.addEventListener("click", closeOnOverlayClick);
+});
+
+document.addEventListener("keydown", closeOnEscKey);
+
+
 
 initialCards.forEach((cardData) => renderCard(cardData, cardList));

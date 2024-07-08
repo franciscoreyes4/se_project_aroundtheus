@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Description of the webapge">
+    <meta name="description" content="Description of the webpage">
     <meta name="keywords" content="Coffee Shop">
     <meta name="author" content="Francisco Reyess">
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="stylesheet" href="./pages/index.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Serif:ital@0;1&display=swap"
-    rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Serif:ital@0;1&display=swap" rel="stylesheet"/>
     <title>Around The U.S</title>
     <link href="./pages/index.css" rel="stylesheet"/>
 </head>
@@ -33,7 +31,7 @@
             </section>
             <section class="cards page__section">
                 <ul class="cards__list">
-
+                    <!-- Cards will be dynamically generated here -->
                 </ul>
             </section>
         </main>
@@ -48,9 +46,11 @@
             <button class="modal__close" id="modal-close-button" ></button>
             <h3 class="modal__heading">Edit Profile</h3>
             <form class="modal__form">
-                <input type="text" class="modal__input" id="modal__input_name" name="name" placeholder="Name">
-                <input type="text" class="modal__input" id="modal__input_description" name="description" placeholder="Description">
-                <button class="modal__button">Save</button>
+                <input type="text" class="modal__input" id="modal__input_name" name="name" placeholder="Name" minlength="2" maxlength="40" required>
+                <span class="modal__input_type_error_visible" id="modal__input_name-error"></span>
+                <input type="text" class="modal__input" id="modal__input_description" name="description" placeholder="Description" minlength="2" maxlength="200" required>
+                <span class="modal__input_type_error_visible" id="modal__input_description-error"></span>
+                <button class="modal__button modal__button_disabled" type="submit" disabled>Save</button>
             </form>
         </div>
     </div>
@@ -61,33 +61,38 @@
             <button class="modal__close" id="modal-close-button" ></button>
             <h3 class="modal__heading">New Place</h3>
             <form class="modal__form" id="add-card-form">
-                <input type="text" class="modal__input" id="modal__input_title" name="title" placeholder="Title">
-                <input type="text" class="modal__input" id="modal__input_url" name="url" placeholder="Image URL">
-                <button class="modal__button">Create</button>
+                <input type="text" class="modal__input" id="modal__input_title" name="title" placeholder="Title" minlength="1" maxlength="30" required>
+                <span class="modal__input_type_error_visible" id="modal__input_title-error"></span>
+                <input type="text" class="modal__input" id="modal__input_url" name="url" placeholder="Image URL" required>
+                <span class="modal__input_type_error_visible" id="modal__input_url-error"></span>
+                <button class="modal__button modal__button_disabled" type="submit" disabled>Create</button>
             </form>
         </div>
     </div>
-        <!-- Card template -->
-        <template id="card-template">
-            <li class="card">
-                <img class="card__image" src="" alt=""/>
-                <div class="card__description">
-                    <h2 class="card__title"></h2>
-                    <button type="button" class="card__like-button"></button>
-                    <button type="button" class="card__delete-button"></button>
-                </div>
-            </li>
-        </template>
-        
-        <!-- add previewImageMdal -->
-        <div class="modal" id="modal-preview-picture">
-            <div class="modal__preview_container">
-              <button class="modal__close" id="picture-close-button"></button>
-              <img class="modal__image" src="" alt=""/>
-              <p class="modal__picture_caption"></p>
+
+    <!-- Card template -->
+    <template id="card-template">
+        <li class="card">
+            <img class="card__image" src="" alt=""/>
+            <div class="card__description">
+                <h2 class="card__title"></h2>
+                <button type="button" class="card__like-button"></button>
+                <button type="button" class="card__delete-button"></button>
             </div>
-          </div>
+        </li>
+    </template>
+        
+    <!-- Preview Image Modal -->
+    <div class="modal" id="modal-preview-picture">
+        <div class="modal__preview_container">
+            <button class="modal__close" id="picture-close-button"></button>
+            <img class="modal__image" src="" alt=""/>
+            <p class="modal__picture_caption"></p>
+        </div>
+    </div>
 
 <script src="./scripts/index.js"></script>
+<script src="./scripts/validation.js"></script>
+
 </body>
 </html>

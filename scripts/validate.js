@@ -12,6 +12,7 @@ function showInputError(formEl, inputEL, { inputErrorClass, errorClass }) {
     inputEL.classList.remove(inputErrorClass);
     errorMessageEl.textContent = "";
     errorMessageEl.classList.remove(errorClass);
+    inputEL.style.marginBottom = '30px';
   }
   
   // Function to check input validity

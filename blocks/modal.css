@@ -70,7 +70,7 @@
     background-color: #000;
     width: 100%;
     height: 50px;
-    margin-top: 48px;
+    margin-top: 19px;
     padding: 0;
 }
 
@@ -90,7 +90,6 @@
 }
 
 #modal__input_title {
-    margin-bottom: 30px;
     height: 28px;
     padding: 0;
     border: none;

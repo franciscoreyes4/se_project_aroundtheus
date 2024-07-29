@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Description of the webpage">
-    <meta name="keywords" content="Coffee Shop">
+    <meta name="keywords" content="Around The US">
     <meta name="author" content="Francisco Reyess">
     <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Serif:ital@0;1&display=swap" rel="stylesheet"/>
@@ -16,11 +15,11 @@
 <body class="page">
     <div class="page__content">
         <header class="header page__section">
-            <img class="header__logo" src="images/logo.svg" alt="Around the U.S logo"/>
+            <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Around the U.S logo"/>
         </header>
         <main class="content">
             <section class="profile page__section">
-                <img class="profile__image" src="images/jacques-cousteau.jpg" alt="Avatar">
+                <img class="profile__image" src="<%=require('./images/jacques-cousteau.jpg')%>" alt="Avatar">
                 <div class="profile__info">
                     <h1 class="profile__title">Jacques Cousteau</h1>
                     <button type="button" class="profile__edit-button" id="profile-edit-button"></button>
@@ -89,7 +88,5 @@
             <p class="modal__picture_caption"></p>
         </div>
     </div>
-
-    <script src="./pages/index.js" type="module"></script>
 </body>
 </html>

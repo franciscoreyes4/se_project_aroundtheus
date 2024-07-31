@@ -76,7 +76,3 @@ addNewCardButton.addEventListener("click", () => {
     addCardFormValidator.resetValidation();
     popupWithFormAddCard.open();
 });
-
-[profileEditModal, addCardModal, previewImageModal].forEach((modal) => {
-    modal.addEventListener("click", closeOnOverlayClick);
-});

@@ -37,7 +37,6 @@ import { initialCards, validationSettings } from "../utils/Constants.js";
      description: formData.description
    });
    popupWithFormProfile.close();
-   formValidators['profile-form'].disableButton(); // Disable submit button after form reset
  }
 
  // Function to handle add card form submit
@@ -68,11 +67,9 @@ import { initialCards, validationSettings } from "../utils/Constants.js";
    const userInfoData = userInfo.getUserInfo();
    popupWithFormProfile.setInputValues(userInfoData);
    formValidators['profile-form'].resetValidation();
-   formValidators['profile-form'].disableButton(); // Disable submit button when opening the form
    popupWithFormProfile.open();
  });
 
  addNewCardButton.addEventListener("click", () => {
-   formValidators['card-form'].disableButton(); // Disable submit button when opening the form
    popupWithFormAddCard.open();
  });

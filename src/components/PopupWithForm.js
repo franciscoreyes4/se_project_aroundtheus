@@ -29,8 +29,6 @@ class PopupWithForm extends Popup {
       e.preventDefault();
       this._handleFormSubmit(this._getInputValues());
       this._form.reset(); // Clear inputs after form submission
-      this._submitButton.classList.add('modal__button_disabled');
-      this._submitButton.disabled = true;
     });
   }
 }

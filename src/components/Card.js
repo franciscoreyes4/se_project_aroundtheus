@@ -2,14 +2,14 @@ class Card {
   constructor(data, cardSelector, handleImageClick, handleDeleteClick, apiInstance) {
     this._name = data.name;
     this._link = data.link;
-    this._likes = data.likes || [];
+    this._likes = data.likes || []; // Ensure likes is always an array
     this._id = data._id;
     this._userId = data.userId; // The ID of the logged-in user
     this._ownerId = data.owner._id; // The ID of the card owner
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
-    this._api = apiInstance;
+    this._api = apiInstance; // Store the API instance
     this._element = this._getTemplate();
     this._likeButton = this._element.querySelector('.card__like-button');
     this._cardImage = this._element.querySelector('.card__image');
@@ -31,44 +31,40 @@ class Card {
   }
 
   _renderLikes() {
-    this._likeCount.textContent = (this._likes && this._likes.length) ? this._likes.length : 0;
+    console.log('Updated likes array:', this._likes);
+    this._likeCount.textContent = this._likes.length;
     if (this._isLikedByUser()) {
       this._likeButton.classList.add('card__like-button_active');
     } else {
       this._likeButton.classList.remove('card__like-button_active');
     }
   }
+  
 
   _isLikedByUser() {
-    // Assuming likes is an array of objects, each containing a user _id
-    const isLiked = this._likes.some(like => like._id === this._userId);
-    console.log('Is liked by user:', isLiked); // Debugging log
-    return isLiked;
-  }
+    return this._likes.some(like => like._id === this._userId);
+  }  
 
   _handleLikeIcon() {
     if (this._isLikedByUser()) {
       this._api.dislikeCard(this._id)
         .then((updatedCard) => {
-          this._likes = updatedCard.likes || [];
-          if (!this._likes.some(like => like._id === this._userId)) {
-            this._likes.push({ _id: this._userId }); // Manually add/remove user ID if API fails to update
-          }
+          this._likes = updatedCard.likes && updatedCard.likes.length > 0 ? updatedCard.likes : this._likes.filter(like => like._id !== this._userId);
           this._renderLikes();
         })
         .catch(err => console.error(`Error disliking card: ${err}`));
     } else {
       this._api.likeCard(this._id)
         .then((updatedCard) => {
-          this._likes = updatedCard.likes || [];
-          if (!this._likes.some(like => like._id === this._userId)) {
-            this._likes.push({ _id: this._userId });
-          }
+          this._likes = updatedCard.likes && updatedCard.likes.length > 0 ? updatedCard.likes : [...this._likes, { _id: this._userId }];
           this._renderLikes();
         })
         .catch(err => console.error(`Error liking card: ${err}`));
     }
   }
+  
+  
+  
 
   getView() {
     this._cardImage.src = this._link;

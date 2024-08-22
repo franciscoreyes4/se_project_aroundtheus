@@ -54,6 +54,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
+  // Like a card
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
@@ -61,6 +62,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
+  // Dislike a card
   dislikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
@@ -68,6 +70,5 @@ class Api {
     }).then(this._checkResponse);
   }
 }
-
 
 export default Api;

@@ -66,12 +66,14 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       name: userData.name,
       description: userData.about,
       avatar: userData.avatar,
+      userId: userData._id // Ensure the user ID is passed here
     });
     cardSection.renderItems(initialCards);
   })
   .catch((err) => {
     console.error("Error loading initial data:", err);
   });
+
 
 // Handle profile form submission
 function handleProfileFormSubmit(formData) {
@@ -112,10 +114,13 @@ function createCard(data) {
     "#card-template",
     () => popupWithImage.open(data),
     () => handleDeleteCard(data._id, card.getView()),
-    api
+    api,
+    userInfo.getUserId() // This should now return the correct user ID
   );
   return card.getView();
 }
+
+
 
 // Handle card deletion
 function handleDeleteCard(cardId, cardElement) {

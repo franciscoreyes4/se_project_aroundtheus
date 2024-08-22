@@ -12,11 +12,12 @@ import { validationSettings } from "../utils/Constants.js";
 // Elements
 const profileEditButton = document.querySelector("#profile-edit-button");
 const addNewCardButton = document.querySelector(".profile__add-button");
-const avatarEditButton = document.querySelector(".profile__image");
+const avatarEditButton = document.querySelector(".profile__image-edit-button");
 
 // Forms
 const profileForm = document.forms['profile-form'];
 const cardForm = document.forms['card-form'];
+const avatarForm = document.forms['avatar-form'];
 
 // API Instance
 const api = new Api({
@@ -48,6 +49,17 @@ popupWithFormProfile.setEventListeners();
 const popupWithFormAddCard = new PopupWithForm("#add-card-modal", handleAddCardFormSubmit);
 popupWithFormAddCard.setEventListeners();
 
+const popupWithFormAvatar = new PopupWithForm("#edit-avatar-modal", handleAvatarFormSubmit);
+popupWithFormAvatar.setEventListeners();
+
+// Event listener to open the avatar edit modal
+if (avatarEditButton) {
+  avatarEditButton.addEventListener('click', () => {
+    formValidators['avatar-form'].resetValidation();
+    popupWithFormAvatar.open();
+  });
+}
+
 // Card section instance
 const cardSection = new Section(
   {
@@ -66,7 +78,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       name: userData.name,
       description: userData.about,
       avatar: userData.avatar,
-      userId: userData._id // Ensure the user ID is passed here
     });
     cardSection.renderItems(initialCards);
   })
@@ -74,9 +85,9 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.error("Error loading initial data:", err);
   });
 
-
 // Handle profile form submission
 function handleProfileFormSubmit(formData) {
+  popupWithFormProfile.renderLoading(true); // Show "Saving..." text
   api.updateUserInfo(formData)
     .then((updatedData) => {
       userInfo.setUserInfo({
@@ -88,11 +99,15 @@ function handleProfileFormSubmit(formData) {
     })
     .catch((err) => {
       console.error("Error updating user profile:", err);
+    })
+    .finally(() => {
+      popupWithFormProfile.renderLoading(false); // Reset button text
     });
 }
 
 // Handle add card form submission
 function handleAddCardFormSubmit(formData) {
+  popupWithFormAddCard.renderLoading(true); // Show "Saving..." text
   api.addCard({
     name: formData.title,
     link: formData.url
@@ -104,6 +119,29 @@ function handleAddCardFormSubmit(formData) {
     })
     .catch((err) => {
       console.error("Error adding card:", err);
+    })
+    .finally(() => {
+      popupWithFormAddCard.renderLoading(false); // Reset button text
+    });
+}
+
+// Handle avatar form submission
+function handleAvatarFormSubmit(formData) {
+  popupWithFormAvatar.renderLoading(true); // Show "Saving..." text
+  api.updateUserAvatar(formData.avatar)
+    .then((updatedUserData) => {
+      userInfo.setUserInfo({
+        name: updatedUserData.name,
+        description: updatedUserData.about,
+        avatar: updatedUserData.avatar,
+      });
+      popupWithFormAvatar.close();
+    })
+    .catch((err) => {
+      console.error("Error updating avatar:", err);
+    })
+    .finally(() => {
+      popupWithFormAvatar.renderLoading(false); // Reset button text
     });
 }
 
@@ -114,13 +152,10 @@ function createCard(data) {
     "#card-template",
     () => popupWithImage.open(data),
     () => handleDeleteCard(data._id, card.getView()),
-    api,
-    userInfo.getUserId() // This should now return the correct user ID
+    api
   );
   return card.getView();
 }
-
-
 
 // Handle card deletion
 function handleDeleteCard(cardId, cardElement) {
@@ -146,10 +181,6 @@ profileEditButton.addEventListener("click", () => {
 
 addNewCardButton.addEventListener("click", () => {
   popupWithFormAddCard.open();
-});
-
-avatarEditButton.addEventListener("click", () => {
-  // Implement the logic for editing the avatar when this feature is set up
 });
 
 // Enable validation for all forms

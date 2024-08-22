@@ -69,6 +69,18 @@ class Api {
       headers: this._headers,
     }).then(this._checkResponse);
   }
+
+  // Update user avatar
+  updateUserAvatar(avatarUrl) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatarUrl
+      })
+    })
+    .then(this._handleResponse);
+  }
 }
 
 export default Api;

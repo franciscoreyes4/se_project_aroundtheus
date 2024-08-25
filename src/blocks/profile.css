@@ -91,6 +91,7 @@
     margin-right: 24px;
     background: none;
     border: none;
+    border-radius: 50%;
     padding: 0;
     cursor: pointer;
   }

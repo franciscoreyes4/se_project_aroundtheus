@@ -1,10 +1,10 @@
 import "../pages/index.css";
 import Card from "../components/Card.js";
+import { enableValidation, formValidators } from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
-import { enableValidation, formValidators } from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import { validationSettings } from "../utils/Constants.js";
@@ -12,12 +12,11 @@ import { validationSettings } from "../utils/Constants.js";
 // Elements
 const profileEditButton = document.querySelector("#profile-edit-button");
 const addNewCardButton = document.querySelector(".profile__add-button");
-const avatarEditButton = document.querySelector(".profile__image-edit-button");
+const avatarEditButton = document.querySelector(".profile__image");
 
 // Forms
 const profileForm = document.forms['profile-form'];
 const cardForm = document.forms['card-form'];
-const avatarForm = document.forms['avatar-form'];
 
 // API Instance
 const api = new Api({
@@ -26,11 +25,6 @@ const api = new Api({
     authorization: "703aeebf-8509-4c4b-9691-d3d6d590ee64",
     "Content-Type": "application/json"
   }
-});
-
-// Initialize confirmation popup for delete
-const popupWithConfirmation = new PopupWithConfirmation({
-  popupSelector: '#delete-confirmation-modal'
 });
 
 // UserInfo and other components initialization
@@ -49,16 +43,11 @@ popupWithFormProfile.setEventListeners();
 const popupWithFormAddCard = new PopupWithForm("#add-card-modal", handleAddCardFormSubmit);
 popupWithFormAddCard.setEventListeners();
 
-const popupWithFormAvatar = new PopupWithForm("#edit-avatar-modal", handleAvatarFormSubmit);
-popupWithFormAvatar.setEventListeners();
-
-// Event listener to open the avatar edit modal
-if (avatarEditButton) {
-  avatarEditButton.addEventListener('click', () => {
-    formValidators['avatar-form'].resetValidation();
-    popupWithFormAvatar.open();
-  });
-}
+const deleteConfirmationPopup = new PopupWithConfirmation({
+  popupSelector: '#delete-confirmation-modal',
+  handleConfirm: handleDeleteCard // Passing the delete function to the popup
+});
+deleteConfirmationPopup.setEventListeners();
 
 // Card section instance
 const cardSection = new Section(
@@ -85,9 +74,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.error("Error loading initial data:", err);
   });
 
-// Handle profile form submission
 function handleProfileFormSubmit(formData) {
-  popupWithFormProfile.renderLoading(true); // Show "Saving..." text
   api.updateUserInfo(formData)
     .then((updatedData) => {
       userInfo.setUserInfo({
@@ -99,15 +86,10 @@ function handleProfileFormSubmit(formData) {
     })
     .catch((err) => {
       console.error("Error updating user profile:", err);
-    })
-    .finally(() => {
-      popupWithFormProfile.renderLoading(false); // Reset button text
     });
 }
 
-// Handle add card form submission
 function handleAddCardFormSubmit(formData) {
-  popupWithFormAddCard.renderLoading(true); // Show "Saving..." text
   api.addCard({
     name: formData.title,
     link: formData.url
@@ -119,59 +101,31 @@ function handleAddCardFormSubmit(formData) {
     })
     .catch((err) => {
       console.error("Error adding card:", err);
-    })
-    .finally(() => {
-      popupWithFormAddCard.renderLoading(false); // Reset button text
     });
 }
 
-// Handle avatar form submission
-function handleAvatarFormSubmit(formData) {
-  popupWithFormAvatar.renderLoading(true); // Show "Saving..." text
-  api.updateUserAvatar(formData.avatar)
-    .then((updatedUserData) => {
-      userInfo.setUserInfo({
-        name: updatedUserData.name,
-        description: updatedUserData.about,
-        avatar: updatedUserData.avatar,
-      });
-      popupWithFormAvatar.close();
-    })
-    .catch((err) => {
-      console.error("Error updating avatar:", err);
-    })
-    .finally(() => {
-      popupWithFormAvatar.renderLoading(false); // Reset button text
-    });
-}
-
-// Create card
 function createCard(data) {
   const card = new Card(
     data,
     "#card-template",
     () => popupWithImage.open(data),
-    () => handleDeleteCard(data._id, card.getView()),
-    api
+    (cardId, cardElement) => deleteConfirmationPopup.open(cardId, cardElement)
   );
   return card.getView();
 }
 
-// Handle card deletion
 function handleDeleteCard(cardId, cardElement) {
-  popupWithConfirmation.open(() => {
-    api.deleteCard(cardId)
-      .then(() => {
-        cardElement.remove(); // Remove from the DOM
-        popupWithConfirmation.close();
-      })
-      .catch((err) => {
-        console.error("Error deleting card:", err);
-      });
-  });
+  api.deleteCard(cardId)
+    .then(() => {
+      cardElement.remove();
+      deleteConfirmationPopup.close();
+    })
+    .catch((err) => {
+      console.error("Error deleting card:", err);
+      deleteConfirmationPopup.close();
+    });
 }
 
-// Event listeners for opening modals
 profileEditButton.addEventListener("click", () => {
   const userInfoData = userInfo.getUserInfo();
   popupWithFormProfile.setInputValues(userInfoData);
@@ -183,5 +137,4 @@ addNewCardButton.addEventListener("click", () => {
   popupWithFormAddCard.open();
 });
 
-// Enable validation for all forms
 enableValidation(validationSettings);

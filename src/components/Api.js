@@ -5,17 +5,21 @@ class Api {
   }
 
   _checkResponse(res) {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    if (res.ok) {
+      console.log('Response is OK, returning JSON');
+      return res.json();
+    } else {
+      console.error(`Response error with status: ${res.status}`);
+      return Promise.reject(`Error: ${res.status}`);
+    }
   }
 
-  // Get user information
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     }).then(this._checkResponse);
   }
 
-  // Update user information
   updateUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
@@ -27,14 +31,12 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  // Get initial cards
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     }).then(this._checkResponse);
   }
 
-  // Add a new card
   addCard(data) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
@@ -46,40 +48,32 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  // Delete a card
   deleteCard(cardId) {
+    console.log(`Making DELETE request for card with ID: ${cardId}`);
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers
-    }).then(this._checkResponse);
-  }
-
-  // Like a card
-  likeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: "PUT",
-      headers: this._headers,
-    }).then(this._checkResponse);
-  }
-
-  // Dislike a card
-  dislikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(this._checkResponse);
-  }
-
-  // Update user avatar
-  updateUserAvatar(avatarUrl) {
-    return fetch(`${this._url}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: avatarUrl
-      })
     })
-    .then(this._handleResponse);
+      .then((res) => {
+        console.log(`Received response for delete request: ${res.status}`);
+        if (!res.ok) {
+          console.error(`Failed to delete card: ${res.statusText}`);
+        }
+        return res.json().catch(() => {
+          console.warn('Received empty or non-JSON response.');
+          return {};
+        });
+      })
+      .then((data) => {
+        if (data.error) {
+          console.error(`Server reported an error: ${data.error}`);
+        }
+        return data;
+      })
+      .catch((error) => {
+        console.error(`Error during the API request: ${error}`);
+        throw error;
+      });
   }
 }
 

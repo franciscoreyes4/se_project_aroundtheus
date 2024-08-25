@@ -4,7 +4,7 @@ class PopupWithConfirmation extends Popup {
   constructor({ popupSelector, handleConfirm }) {
     super(popupSelector);
     this._confirmButton = this._popup.querySelector('.modal__button_confirm');
-    this._handleConfirm = handleConfirm; // Function passed in during instantiation
+    this._handleConfirm = handleConfirm;
     this._cardId = null;
     this._cardElement = null;
   }
@@ -13,7 +13,7 @@ class PopupWithConfirmation extends Popup {
     super.setEventListeners();
     this._confirmButton.addEventListener('click', (event) => {
       event.preventDefault();
-      event.stopPropagation(); // Ensure the click event isn't blocked
+      event.stopPropagation();
       if (this._handleConfirm) {
         this._handleConfirm(this._cardId, this._cardElement);
       }

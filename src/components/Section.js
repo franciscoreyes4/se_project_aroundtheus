@@ -8,7 +8,7 @@ class Section {
     renderItems(items) {
       if (!Array.isArray(items)) {
         console.error("renderItems expected an array but received:", items);
-        return; // Prevent further execution if the data is not valid
+        return;
       }
       items.forEach((item) => this._renderer(item));
     }

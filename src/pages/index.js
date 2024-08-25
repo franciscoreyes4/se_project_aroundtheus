@@ -12,11 +12,7 @@ import { validationSettings } from "../utils/Constants.js";
 // Elements
 const profileEditButton = document.querySelector("#profile-edit-button");
 const addNewCardButton = document.querySelector(".profile__add-button");
-const avatarEditButton = document.querySelector(".profile__image");
-
-// Forms
-const profileForm = document.forms['profile-form'];
-const cardForm = document.forms['card-form'];
+const avatarEditButton = document.querySelector(".profile__image-edit-button");
 
 // API Instance
 const api = new Api({
@@ -27,13 +23,14 @@ const api = new Api({
   }
 });
 
-// UserInfo and other components initialization
+// UserInfo instance
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   descriptionSelector: ".profile__description",
   avatarSelector: ".profile__image"
 });
 
+// Popup instances
 const popupWithImage = new PopupWithImage("#modal-preview-picture");
 popupWithImage.setEventListeners();
 
@@ -43,11 +40,14 @@ popupWithFormProfile.setEventListeners();
 const popupWithFormAddCard = new PopupWithForm("#add-card-modal", handleAddCardFormSubmit);
 popupWithFormAddCard.setEventListeners();
 
-const deleteConfirmationPopup = new PopupWithConfirmation({
+const popupWithFormAvatar = new PopupWithForm("#edit-avatar-modal", handleAvatarFormSubmit);
+popupWithFormAvatar.setEventListeners();
+
+const popupWithConfirmation = new PopupWithConfirmation({
   popupSelector: '#delete-confirmation-modal',
-  handleConfirm: handleDeleteCard // Passing the delete function to the popup
+  handleConfirm: handleDeleteCard
 });
-deleteConfirmationPopup.setEventListeners();
+popupWithConfirmation.setEventListeners();
 
 // Card section instance
 const cardSection = new Section(
@@ -74,6 +74,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.error("Error loading initial data:", err);
   });
 
+// Handle profile form submission
 function handleProfileFormSubmit(formData) {
   api.updateUserInfo(formData)
     .then((updatedData) => {
@@ -89,6 +90,7 @@ function handleProfileFormSubmit(formData) {
     });
 }
 
+// Handle add card form submission
 function handleAddCardFormSubmit(formData) {
   api.addCard({
     name: formData.title,
@@ -104,28 +106,47 @@ function handleAddCardFormSubmit(formData) {
     });
 }
 
+// Handle avatar form submission
+function handleAvatarFormSubmit(formData) {
+  api.updateUserAvatar(formData.avatar)
+    .then((updatedUserData) => {
+      userInfo.setUserInfo({
+        name: updatedUserData.name,
+        description: updatedUserData.about,
+        avatar: updatedUserData.avatar,
+      });
+      popupWithFormAvatar.close();
+    })
+    .catch((err) => {
+      console.error("Error updating avatar:", err);
+    });
+}
+
+// Handle card deletion
+function handleDeleteCard(cardId, cardElement) {
+  api.deleteCard(cardId)
+    .then(() => {
+      cardElement.remove();
+      popupWithConfirmation.close();
+    })
+    .catch((err) => {
+      console.error("Error deleting card:", err);
+      popupWithConfirmation.close();
+    });
+}
+
+// Create card
 function createCard(data) {
   const card = new Card(
     data,
     "#card-template",
     () => popupWithImage.open(data),
-    (cardId, cardElement) => deleteConfirmationPopup.open(cardId, cardElement)
+    (cardId, cardElement) => popupWithConfirmation.open(cardId, cardElement)
   );
   return card.getView();
 }
 
-function handleDeleteCard(cardId, cardElement) {
-  api.deleteCard(cardId)
-    .then(() => {
-      cardElement.remove();
-      deleteConfirmationPopup.close();
-    })
-    .catch((err) => {
-      console.error("Error deleting card:", err);
-      deleteConfirmationPopup.close();
-    });
-}
-
+// Event listeners
 profileEditButton.addEventListener("click", () => {
   const userInfoData = userInfo.getUserInfo();
   popupWithFormProfile.setInputValues(userInfoData);
@@ -137,4 +158,11 @@ addNewCardButton.addEventListener("click", () => {
   popupWithFormAddCard.open();
 });
 
+// Fix the avatar edit modal pop-up issue
+avatarEditButton.addEventListener("click", () => {
+  formValidators['avatar-form'].resetValidation();
+  popupWithFormAvatar.open();
+});
+
+// Enable validation for all forms
 enableValidation(validationSettings);

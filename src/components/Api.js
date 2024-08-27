@@ -21,12 +21,13 @@ class Api {
   }
 
   updateUserInfo(data) {
+    console.log('Updating user with:', data);
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
-        about: data.about
+        about: data.description
       })
     }).then(this._checkResponse);
   }
@@ -54,26 +55,35 @@ class Api {
       method: "DELETE",
       headers: this._headers
     })
-      .then((res) => {
-        console.log(`Received response for delete request: ${res.status}`);
-        if (!res.ok) {
-          console.error(`Failed to delete card: ${res.statusText}`);
-        }
-        return res.json().catch(() => {
-          console.warn('Received empty or non-JSON response.');
-          return {};
-        });
-      })
-      .then((data) => {
-        if (data.error) {
-          console.error(`Server reported an error: ${data.error}`);
-        }
-        return data;
-      })
+      .then(this._checkResponse)
       .catch((error) => {
         console.error(`Error during the API request: ${error}`);
         throw error;
       });
+  }
+
+  updateUserAvatar(avatarUrl) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatarUrl
+      })
+    }).then(this._checkResponse);
+  }
+
+  addLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers
+    }).then(this._checkResponse);
+  }
+
+  removeLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers
+    }).then(this._checkResponse);
   }
 }
 

@@ -1,12 +1,12 @@
 import "../pages/index.css";
 import Card from "../components/Card.js";
-import { enableValidation, formValidators } from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
+import { enableValidation, formValidators } from "../components/FormValidator.js";
 import { validationSettings } from "../utils/Constants.js";
 
 // Elements
@@ -76,6 +76,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
 // Handle profile form submission
 function handleProfileFormSubmit(formData) {
+  popupWithFormProfile.renderLoading(true); 
   api.updateUserInfo(formData)
     .then((updatedData) => {
       userInfo.setUserInfo({
@@ -87,11 +88,15 @@ function handleProfileFormSubmit(formData) {
     })
     .catch((err) => {
       console.error("Error updating user profile:", err);
+    })
+    .finally(() => {
+      popupWithFormProfile.renderLoading(false); 
     });
 }
 
 // Handle add card form submission
 function handleAddCardFormSubmit(formData) {
+  popupWithFormAddCard.renderLoading(true); 
   api.addCard({
     name: formData.title,
     link: formData.url
@@ -103,11 +108,15 @@ function handleAddCardFormSubmit(formData) {
     })
     .catch((err) => {
       console.error("Error adding card:", err);
+    })
+    .finally(() => {
+      popupWithFormAddCard.renderLoading(false); 
     });
 }
 
 // Handle avatar form submission
 function handleAvatarFormSubmit(formData) {
+  popupWithFormAvatar.renderLoading(true); 
   api.updateUserAvatar(formData.avatar)
     .then((updatedUserData) => {
       userInfo.setUserInfo({
@@ -119,19 +128,21 @@ function handleAvatarFormSubmit(formData) {
     })
     .catch((err) => {
       console.error("Error updating avatar:", err);
+    })
+    .finally(() => {
+      popupWithFormAvatar.renderLoading(false);
     });
 }
 
 // Handle card deletion
 function handleDeleteCard(cardId, cardElement) {
-  api.deleteCard(cardId)
+  return api.deleteCard(cardId) 
     .then(() => {
       cardElement.remove();
       popupWithConfirmation.close();
     })
     .catch((err) => {
       console.error("Error deleting card:", err);
-      popupWithConfirmation.close();
     });
 }
 
@@ -141,7 +152,8 @@ function createCard(data) {
     data,
     "#card-template",
     () => popupWithImage.open(data),
-    (cardId, cardElement) => popupWithConfirmation.open(cardId, cardElement)
+    (cardId, cardElement) => popupWithConfirmation.open(cardId, cardElement),
+    api
   );
   return card.getView();
 }
@@ -151,16 +163,18 @@ profileEditButton.addEventListener("click", () => {
   const userInfoData = userInfo.getUserInfo();
   popupWithFormProfile.setInputValues(userInfoData);
   formValidators['profile-form'].resetValidation();
+  popupWithFormProfile.renderLoading(false); 
   popupWithFormProfile.open();
 });
 
 addNewCardButton.addEventListener("click", () => {
+  popupWithFormAddCard.renderLoading(false); 
   popupWithFormAddCard.open();
 });
 
-// Fix the avatar edit modal pop-up issue
 avatarEditButton.addEventListener("click", () => {
   formValidators['avatar-form'].resetValidation();
+  popupWithFormAvatar.renderLoading(false);
   popupWithFormAvatar.open();
 });
 

@@ -7,6 +7,7 @@ class PopupWithConfirmation extends Popup {
     this._handleConfirm = handleConfirm;
     this._cardId = null;
     this._cardElement = null;
+    this._defaultButtonText = this._confirmButton.textContent; // Store default button text
   }
 
   setEventListeners() {
@@ -14,8 +15,19 @@ class PopupWithConfirmation extends Popup {
     this._confirmButton.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
+      this.renderLoading(true); // Show "Saving..." when confirm button is clicked
+
       if (this._handleConfirm) {
-        this._handleConfirm(this._cardId, this._cardElement);
+        const confirmPromise = this._handleConfirm(this._cardId, this._cardElement);
+        
+        if (confirmPromise && typeof confirmPromise.finally === 'function') {
+          confirmPromise.finally(() => {
+            this.renderLoading(false); // Reset button text after confirmation logic
+          });
+        } else {
+          console.error("handleConfirm did not return a Promise");
+          this.renderLoading(false); // Reset button text in case of error
+        }
       }
     });
   }
@@ -30,6 +42,14 @@ class PopupWithConfirmation extends Popup {
     super.close();
     this._cardId = null;
     this._cardElement = null;
+  }
+
+  renderLoading(isLoading) {
+    if (isLoading) {
+      this._confirmButton.textContent = 'Saving...';
+    } else {
+      this._confirmButton.textContent = this._defaultButtonText;
+    }
   }
 }
 

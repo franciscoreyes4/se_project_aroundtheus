@@ -155,7 +155,7 @@
         text-align: center;
         justify-content: center;
         max-width: 282px;
-        margin: 0 auto;
+        margin: 30px auto 0;
     }
 
     .profile__add-button {

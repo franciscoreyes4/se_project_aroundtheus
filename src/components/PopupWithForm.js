@@ -28,8 +28,28 @@ class PopupWithForm extends Popup {
     super.setEventListeners();
     this._form.addEventListener('submit', (e) => {
       e.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
-      this._form.reset(); // Clear inputs after form submission
+      this.renderLoading(true);
+
+      const submitResult = this._handleFormSubmit(this._getInputValues());
+      
+      if (submitResult && typeof submitResult.then === 'function') {
+        submitResult
+          .then(() => {
+            this._form.reset(); // Clear inputs after successful form submission
+            this._submitButton.disabled = true; // Disable the submit button
+            this._submitButton.classList.add('modal__button_disabled');
+            this.close(); // Close the popup after submission
+          })
+          .catch((err) => {
+            console.error("Error submitting form:", err);
+          })
+          .finally(() => {
+            this.renderLoading(false);
+          });
+      } else {
+        console.error("handleFormSubmit did not return a Promise.");
+        this.renderLoading(false);
+      }
     });
   }
 

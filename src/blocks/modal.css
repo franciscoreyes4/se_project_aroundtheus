@@ -113,26 +113,26 @@
 }
   
 #delete-confirmation-modal .modal__container {
-    max-width: 430px; /* Set the width */
-    max-height: 181px; /* Set the height */
+    max-width: 430px;
+    max-height: 181px; 
     min-height: 0;
     margin: 0;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
     flex-direction: column;
     align-items: center;
+    position: fixed;
 }
 
 .modal__button_confirm {
     color: #fff;
     background-color: #000;
     width: 100%;
-    height: 50px; /* Explicit height setting */
+    height: 50px;
     margin-top: 0;
-    padding: 12px 0; /* Adjust padding if needed */
-    font-size: 18px; /* Ensure the font size is large enough */
+    padding: 12px 0; 
+    font-size: 18px; 
     text-align: center;
     cursor: pointer;
     border: none;
@@ -142,13 +142,19 @@
 
 @media screen and (max-width: 620px) {
     .modal_opened {
-        align-items: flex-start;
+        align-items: center;
     }
 
     .modal__container {
         min-width: 282px;
         min-height: 322px;
         padding: 25px 22px;
+    }
+
+    #delete-confirmation-modal {
+        max-height: 181px;
+        padding: 25px 22px;
+        top: 50%;
     }
 
     .modal__close {
@@ -159,7 +165,7 @@
         left: 90%;
     }
 
-    .modal__button {
+    .modal__button .modal__button_confirm {
        margin-top: 45px;
        font-size: 14px;
     }

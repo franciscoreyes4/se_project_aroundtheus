@@ -1,5 +1,6 @@
 class Card {
   constructor(data, cardSelector, handleCardClick, handleDeleteClick, api) {
+    // Data and handlers initialization
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
@@ -12,6 +13,14 @@ class Card {
     this._handleDeleteClick = handleDeleteClick;
     this._api = api;
     this._element = this._getTemplate();
+
+    // Initialize elements as class fields
+    this._likeButton = this._element.querySelector('.card__like-button');
+    this._deleteButton = this._element.querySelector('.card__delete-button');
+    this._cardImage = this._element.querySelector('.card__image');
+    this._cardTitle = this._element.querySelector('.card__title');
+
+    // Event listeners setup
     this._setEventListeners();
   }
 
@@ -25,11 +34,11 @@ class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.card__delete-button').addEventListener('click', () => {
+    this._deleteButton.addEventListener('click', () => {
       this._handleDeleteClick(this._id, this._element);
     });
-    this._element.querySelector('.card__image').addEventListener('click', this._handleCardClick);
-    this._element.querySelector('.card__like-button').addEventListener('click', () => this._toggleLike());
+    this._cardImage.addEventListener('click', this._handleCardClick);
+    this._likeButton.addEventListener('click', () => this._toggleLike());
   }
 
   _toggleLike() {
@@ -53,20 +62,17 @@ class Card {
   }
 
   _updateLikesView() {
-    const likeButton = this._element.querySelector('.card__like-button');
-
     if (this._isLiked) {
-      likeButton.classList.add('card__like-button_active');
+      this._likeButton.classList.add('card__like-button_active');
     } else {
-      likeButton.classList.remove('card__like-button_active');
+      this._likeButton.classList.remove('card__like-button_active');
     }
   }
 
   getView() {
-    this._element.querySelector('.card__title').textContent = this._name;
-    const cardImage = this._element.querySelector('.card__image');
-    cardImage.src = this._link;
-    cardImage.alt = this._name;
+    this._cardTitle.textContent = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
 
     this._updateLikesView();
     return this._element;

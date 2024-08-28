@@ -77,7 +77,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 // Handle profile form submission
 function handleProfileFormSubmit(formData) {
   popupWithFormProfile.renderLoading(true); 
-  api.updateUserInfo(formData)
+  return api.updateUserInfo(formData)
     .then((updatedData) => {
       userInfo.setUserInfo({
         name: updatedData.name,
@@ -85,6 +85,10 @@ function handleProfileFormSubmit(formData) {
         avatar: updatedData.avatar
       });
       popupWithFormProfile.close();
+      popupWithFormProfile._form.reset();  // Clear the form fields only after submission
+
+      // Use toggleButtonState instead of manually disabling the button
+      formValidators['profile-form']._toggleButtonState();
     })
     .catch((err) => {
       console.error("Error updating user profile:", err);
@@ -96,28 +100,33 @@ function handleProfileFormSubmit(formData) {
 
 // Handle add card form submission
 function handleAddCardFormSubmit(formData) {
-  popupWithFormAddCard.renderLoading(true); 
-  api.addCard({
+  return api.addCard({ // The function should return the Promise
     name: formData.title,
     link: formData.url
   })
-    .then((newCard) => {
-      const cardElement = createCard(newCard);
-      cardSection.addItem(cardElement);
-      popupWithFormAddCard.close();
-    })
-    .catch((err) => {
-      console.error("Error adding card:", err);
-    })
-    .finally(() => {
-      popupWithFormAddCard.renderLoading(false); 
-    });
+  .then((newCard) => {
+    const cardElement = createCard(newCard);
+    cardSection.addItem(cardElement);
+    popupWithFormAddCard._form.reset(); // Clear the form fields only after submission
+    popupWithFormAddCard.close();
+    
+    // After resetting the form, update the button state
+    formValidators['card-form']._toggleButtonState(); // Ensure the button is disabled if the inputs are empty
+  })
+  .catch((err) => {
+    console.error("Error adding card:", err);
+  })
+  .finally(() => {
+    popupWithFormAddCard.renderLoading(false);
+  });
 }
+
+
 
 // Handle avatar form submission
 function handleAvatarFormSubmit(formData) {
   popupWithFormAvatar.renderLoading(true); 
-  api.updateUserAvatar(formData.avatar)
+  return api.updateUserAvatar(formData.avatar)
     .then((updatedUserData) => {
       userInfo.setUserInfo({
         name: updatedUserData.name,
@@ -125,6 +134,10 @@ function handleAvatarFormSubmit(formData) {
         avatar: updatedUserData.avatar,
       });
       popupWithFormAvatar.close();
+      popupWithFormAvatar._form.reset();  // Clear the form fields only after submission
+
+      // Use toggleButtonState instead of manually disabling the button
+      formValidators['avatar-form']._toggleButtonState();
     })
     .catch((err) => {
       console.error("Error updating avatar:", err);
@@ -133,6 +146,7 @@ function handleAvatarFormSubmit(formData) {
       popupWithFormAvatar.renderLoading(false);
     });
 }
+
 
 // Handle card deletion
 function handleDeleteCard(cardId, cardElement) {
@@ -163,18 +177,15 @@ profileEditButton.addEventListener("click", () => {
   const userInfoData = userInfo.getUserInfo();
   popupWithFormProfile.setInputValues(userInfoData);
   formValidators['profile-form'].resetValidation();
-  popupWithFormProfile.renderLoading(false); 
   popupWithFormProfile.open();
 });
 
 addNewCardButton.addEventListener("click", () => {
-  popupWithFormAddCard.renderLoading(false); 
   popupWithFormAddCard.open();
 });
 
 avatarEditButton.addEventListener("click", () => {
   formValidators['avatar-form'].resetValidation();
-  popupWithFormAvatar.renderLoading(false);
   popupWithFormAvatar.open();
 });
 

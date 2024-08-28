@@ -15,7 +15,7 @@ class PopupWithConfirmation extends Popup {
     this._confirmButton.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
-      this.renderLoading(true); // Show "Saving..." when confirm button is clicked
+      this.renderLoading(true, 'Deleting...'); // Show "Deleting..." when confirm button is clicked
 
       if (this._handleConfirm) {
         const confirmPromise = this._handleConfirm(this._cardId, this._cardElement);
@@ -44,9 +44,9 @@ class PopupWithConfirmation extends Popup {
     this._cardElement = null;
   }
 
-  renderLoading(isLoading) {
+  renderLoading(isLoading, loadingText = 'Saving...') {
     if (isLoading) {
-      this._confirmButton.textContent = 'Saving...';
+      this._confirmButton.textContent = loadingText;
     } else {
       this._confirmButton.textContent = this._defaultButtonText;
     }

@@ -85,10 +85,8 @@ function handleProfileFormSubmit(formData) {
         avatar: updatedData.avatar
       });
       popupWithFormProfile.close();
-      popupWithFormProfile._form.reset();  // Clear the form fields only after submission
-
-      // Use toggleButtonState instead of manually disabling the button
-      formValidators['profile-form']._toggleButtonState();
+      popupWithFormProfile.form.reset();
+      formValidators['profile-form'].toggleButtonState();
     })
     .catch((err) => {
       console.error("Error updating user profile:", err);
@@ -100,18 +98,16 @@ function handleProfileFormSubmit(formData) {
 
 // Handle add card form submission
 function handleAddCardFormSubmit(formData) {
-  return api.addCard({ // The function should return the Promise
+  return api.addCard({
     name: formData.title,
     link: formData.url
   })
   .then((newCard) => {
     const cardElement = createCard(newCard);
     cardSection.addItem(cardElement);
-    popupWithFormAddCard._form.reset(); // Clear the form fields only after submission
+    popupWithFormAddCard.form.reset();
     popupWithFormAddCard.close();
-    
-    // After resetting the form, update the button state
-    formValidators['card-form']._toggleButtonState(); // Ensure the button is disabled if the inputs are empty
+    formValidators['card-form'].toggleButtonState();
   })
   .catch((err) => {
     console.error("Error adding card:", err);
@@ -120,8 +116,6 @@ function handleAddCardFormSubmit(formData) {
     popupWithFormAddCard.renderLoading(false);
   });
 }
-
-
 
 // Handle avatar form submission
 function handleAvatarFormSubmit(formData) {
@@ -134,10 +128,8 @@ function handleAvatarFormSubmit(formData) {
         avatar: updatedUserData.avatar,
       });
       popupWithFormAvatar.close();
-      popupWithFormAvatar._form.reset();  // Clear the form fields only after submission
-
-      // Use toggleButtonState instead of manually disabling the button
-      formValidators['avatar-form']._toggleButtonState();
+      popupWithFormAvatar.form.reset();
+      formValidators['avatar-form'].toggleButtonState();  
     })
     .catch((err) => {
       console.error("Error updating avatar:", err);
@@ -146,7 +138,6 @@ function handleAvatarFormSubmit(formData) {
       popupWithFormAvatar.renderLoading(false);
     });
 }
-
 
 // Handle card deletion
 function handleDeleteCard(cardId, cardElement) {
@@ -185,7 +176,6 @@ addNewCardButton.addEventListener("click", () => {
 });
 
 avatarEditButton.addEventListener("click", () => {
-  formValidators['avatar-form'].resetValidation();
   popupWithFormAvatar.open();
 });
 

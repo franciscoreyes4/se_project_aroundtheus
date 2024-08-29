@@ -19,14 +19,16 @@
         </header>
         <main class="content">
             <section class="profile page__section">
-                <img class="profile__image" src="<%=require('./images/jacques-cousteau.jpg')%>" alt="Avatar">
+                <button type="button" class="profile__image-edit-button">
+                    <img class="profile__image" src="<%=require('./images/jacques-cousteau.jpg')%>" alt="Avatar">
+                </button>
                 <div class="profile__info">
-                    <h1 class="profile__title">Jacques Cousteau</h1>
-                    <button type="button" class="profile__edit-button" id="profile-edit-button"></button>
-                    <p class="profile__description">Explorer</p>
+                  <h1 class="profile__title"></h1>
+                  <button type="button" class="profile__edit-button" id="profile-edit-button"></button>
+                  <p class="profile__description"></p>
                 </div>
                 <button type="button" class="profile__add-button"></button>
-            </section>
+              </section>
             <section class="cards page__section">
                 <ul class="cards__list">
                     <!-- Cards will be dynamically generated here -->
@@ -46,10 +48,12 @@
             <form class="modal__form" name="profile-form">
                 <input type="text" class="modal__input" id="modal__input_name" name="name" placeholder="Name" minlength="2" maxlength="40" required>
                 <span class="modal__input-error" id="modal__input_name-error"></span>
+                
                 <input type="text" class="modal__input" id="modal__input_description" name="description" placeholder="Description" minlength="2" maxlength="200" required>
                 <span class="modal__input-error" id="modal__input_description-error"></span>
+                
                 <button class="modal__button modal__button_disabled" type="submit" disabled>Save</button>
-            </form>
+              </form>
         </div>
     </div>
 
@@ -61,10 +65,12 @@
             <form class="modal__form" name="card-form" id="add-card-form">
                 <input type="text" class="modal__input" id="modal__input_title" name="title" placeholder="Title" minlength="1" maxlength="30" required>
                 <span class="modal__input-error" id="modal__input_title-error"></span>
+                
                 <input type="url" class="modal__input" id="modal__input_url" name="url" placeholder="Image URL" required>
                 <span class="modal__input-error" id="modal__input_url-error"></span>
+                
                 <button class="modal__button modal__button_disabled" type="submit" disabled>Create</button>
-            </form>
+              </form>
         </div>
     </div>
 
@@ -75,6 +81,7 @@
             <div class="card__description">
                 <h2 class="card__title"></h2>
                 <button type="button" class="card__like-button"></button>
+                <span class="card__like-count"></span>
                 <button type="button" class="card__delete-button"></button>
             </div>
         </li>
@@ -88,5 +95,28 @@
             <p class="modal__picture_caption"></p>
         </div>
     </div>
+
+    <!-- Delete confirmation modal -->
+    <div class="modal" id="delete-confirmation-modal">
+        <div class="modal__container">
+          <button class="modal__close"></button>
+          <h3 class="modal__heading">Are you sure?</h3>
+          <button class="modal__button modal__button_confirm" type="button">Yes</button>
+        </div>
+      </div>
+
+    <!-- Edit Avatar Modal -->
+    <div class="modal" id="edit-avatar-modal">
+        <div class="modal__container">
+            <button class="modal__close"></button>
+            <h3 class="modal__heading">Change profile picture</h3>
+            <form name="avatar-form" class="modal__form">
+                <input type="url" class="modal__input" name="avatar" id="modal__input_avatar" placeholder="Image URL" required>
+                <span class="modal__input-error" id="modal__input_avatar-error"></span>
+                <button type="submit" class="modal__button modal__button_disabled" disabled>Save</button>
+            </form>
+        </div>
+    </div>
+    
 </body>
 </html>

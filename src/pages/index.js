@@ -76,7 +76,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
 // Handle profile form submission
 function handleProfileFormSubmit(formData) {
-  popupWithFormProfile.renderLoading(true); 
   return api.updateUserInfo(formData)
     .then((updatedData) => {
       userInfo.setUserInfo({
@@ -119,7 +118,6 @@ function handleAddCardFormSubmit(formData) {
 
 // Handle avatar form submission
 function handleAvatarFormSubmit(formData) {
-  popupWithFormAvatar.renderLoading(true); 
   return api.updateUserAvatar(formData.avatar)
     .then((updatedUserData) => {
       userInfo.setUserInfo({
